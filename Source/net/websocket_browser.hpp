@@ -1,4 +1,4 @@
-#include <emscripten.h>
+/*#include <emscripten.h>
 #include <vector>
 #include <functional>
 #include "../../Server/packet.hpp"
@@ -64,3 +64,4 @@ extern "C" {
   }
 
 }
+*/

@@ -1,3 +1,4 @@
+/*
 #ifndef EMSCRIPTEN
 #include "websocket_native.hpp"
 #else
@@ -120,3 +121,4 @@ void websocket_client::handle_packet(const uint8_t* data, size_t size) {
 }
 
 } // namespace net
+*/

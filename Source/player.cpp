@@ -3391,6 +3391,28 @@ void ProcessPlayers()
 					}
 					drawhpflag = TRUE;
 				}
+				if ((plr[pnum]._pIFlags & ISPL_REGLIFE) && currlevel != 0) {
+					int j, regen, heal;
+
+					regen = 0;
+					for (j = 0; j < NUM_INVLOC; j++) {
+						if (plr[pnum].InvBody[j]._itype != ITYPE_NONE
+						    && (plr[pnum].InvBody[j]._iFlags & ISPL_REGLIFE)
+						    && plr[pnum].InvBody[j]._iStatFlag) {
+							regen += plr[pnum].InvBody[j]._iVAdd1;
+						}
+					}
+					if (regen > 0) {
+						heal = regen * 32 / 10;
+						plr[pnum]._pHitPoints += heal;
+						plr[pnum]._pHPBase += heal;
+						if (plr[pnum]._pHitPoints > plr[pnum]._pMaxHP)
+							plr[pnum]._pHitPoints = plr[pnum]._pMaxHP;
+						if (plr[pnum]._pHPBase > plr[pnum]._pMaxHPBase)
+							plr[pnum]._pHPBase = plr[pnum]._pMaxHPBase;
+						drawhpflag = TRUE;
+					}
+				}
 				if (plr[pnum]._pIFlags & ISPL_NOMANA && plr[pnum]._pManaBase > 0) {
 					plr[pnum]._pManaBase -= plr[pnum]._pMana;
 					plr[pnum]._pMana = 0;

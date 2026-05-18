@@ -1,4 +1,4 @@
-#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+/*#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 #define _WIN32_WINNT 0x0501
 
 #include <boost/beast/core.hpp>
@@ -175,3 +175,4 @@ private:
   std::thread thread_;
   std::shared_ptr<websocket_session> session_;
 };
+*/

@@ -1258,8 +1258,8 @@ BOOL IdItemOk(ItemStruct *i)
 void AddStoreHoldId(ItemStruct itm, int i)
 {
 	storehold[storenumh] = itm;
-	storehold[storenumh]._ivalue = 100;
-	storehold[storenumh]._iIvalue = 100;
+	storehold[storenumh]._ivalue = 0;
+	storehold[storenumh]._iIvalue = 0;
 	storehidx[storenumh] = i;
 	storenumh++;
 }
@@ -1314,7 +1314,7 @@ void S_StartSIdentify()
 
 	if (!idok) {
 		stextscrl = FALSE;
-		sprintf(tempstr, "You have nothing to identify.            Your gold : %i", plr[myplr]._pGold);
+		sprintf(tempstr, "You have nothing to identify.");
 		AddSText(0, 1, 1, tempstr, COL_GOLD, 0);
 		AddSLine(3);
 		AddSLine(21);
@@ -1324,7 +1324,7 @@ void S_StartSIdentify()
 		stextscrl = TRUE;
 		stextsval = 0;
 		stextsmax = plr[myplr]._pNumInv;
-		sprintf(tempstr, "Identify which item?            Your gold : %i", plr[myplr]._pGold);
+		sprintf(tempstr, "Identify which item?");
 		AddSText(0, 1, 1, tempstr, COL_GOLD, 0);
 		AddSLine(3);
 		AddSLine(21);

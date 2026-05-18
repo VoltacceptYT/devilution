@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include <string>
@@ -28,3 +29,4 @@ private:
 };
 
 }  // namespace net
+*/

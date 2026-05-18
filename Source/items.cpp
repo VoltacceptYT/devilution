@@ -848,6 +848,15 @@ void SetPlrHandGoldCurs(ItemStruct *h)
 		h->_iCurs = ICURS_GOLD_MEDIUM;
 }
 
+#define UI_TYRAELS_MIGHT 90
+
+static void GiveStarterTyraelsMight(int p)
+{
+	RecreateItem(MAXITEMS, IDI_TYRAELSMIGHT, 0x0200, UI_TYRAELS_MIGHT, 0);
+	plr[p].InvBody[INVLOC_CHEST] = item[MAXITEMS];
+	plr[p].InvBody[INVLOC_CHEST]._iIdentified = TRUE;
+}
+
 void CreatePlrItems(int p)
 {
 	int i;
@@ -918,6 +927,8 @@ void CreatePlrItems(int p)
 		GetPlrHandSeed(&plr[p].SpdList[1]);
 		break;
 	}
+
+	GiveStarterTyraelsMight(p);
 
 	SetPlrHandItem(&plr[p].HoldItem, IDI_GOLD);
 	GetPlrHandSeed(&plr[p].HoldItem);
@@ -1507,7 +1518,10 @@ void SaveItemPower(int i, int power, int param1, int param2, int minval, int max
 		item[i]._iMaxDur = 255;
 		break;
 	case IPL_LIGHT:
-		item[i]._iPLLight += param1;
+		if (param1 == 35 && param2 == 35)
+			item[i]._iPLLight += 4;
+		else
+			item[i]._iPLLight += param1;
 		break;
 	case IPL_LIGHT_CURSE:
 		item[i]._iPLLight -= param1;
@@ -1607,6 +1621,9 @@ void SaveItemPower(int i, int power, int param1, int param2, int minval, int max
 		break;
 	case IPL_DRAINLIFE:
 		item[i]._iFlags |= ISPL_DRAINLIFE;
+		break;
+	case IPL_REGLIFE:
+		item[i]._iFlags |= ISPL_REGLIFE;
 		break;
 	case IPL_RNDSTEALLIFE:
 		item[i]._iFlags |= ISPL_RNDSTEALLIFE;
@@ -1977,12 +1994,11 @@ void GetUniqueItem(int i, int uid)
 	strcpy(item[i]._iIName, UniqueItemList[uid].UIName);
 	item[i]._iIvalue = UniqueItemList[uid].UIValue;
 
-	if (item[i]._iMiscId == IMISC_UNIQUE)
-		item[i]._iSeed = uid;
-
 	item[i]._iCreateInfo |= 0x0200;
 	item[i]._iUid = uid;
 	item[i]._iMagical = ITEM_QUALITY_UNIQUE;
+	if (item[i]._iMiscId == IMISC_UNIQUE)
+		item[i]._iSeed = uid;
 }
 
 void SpawnUnique(int uid, int x, int y)
@@ -2760,7 +2776,10 @@ void PrintItemPower(char plidx, ItemStruct *x)
 		strcpy(tempstr, "indestructible");
 		break;
 	case IPL_LIGHT:
-		sprintf(tempstr, "+%i%% light radius", 10 * x->_iPLLight);
+		if (x->_iUid == UI_TYRAELS_MIGHT)
+			strcpy(tempstr, "+35% light radius");
+		else
+			sprintf(tempstr, "+%i%% light radius", 10 * x->_iPLLight);
 		break;
 	case IPL_LIGHT_CURSE:
 		sprintf(tempstr, "-%i%% light radius", -10 * x->_iPLLight);
@@ -2851,6 +2870,9 @@ void PrintItemPower(char plidx, ItemStruct *x)
 		break;
 	case IPL_DRAINLIFE:
 		strcpy(tempstr, "constantly lose hit points");
+		break;
+	case IPL_REGLIFE:
+		sprintf(tempstr, "regenerate %i hit points per second", x->_iVAdd1);
 		break;
 	case IPL_RNDSTEALLIFE:
 		strcpy(tempstr, "life stealing");
@@ -2963,6 +2985,8 @@ void DrawUniqueInfo()
 
 	if (!chrflag && !questlog) {
 		uid = curruitem._iUid;
+		if (uid < 0 || uid >= 128 || UniqueItemList[uid].UIItemId == UITYPE_INVALID)
+			uid = curruitem._iSeed;
 		DrawUTextBack();
 		PrintUString(0, 2, 1, UniqueItemList[uid].UIName, 3);
 		DrawULine(5);

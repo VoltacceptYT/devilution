@@ -74,6 +74,7 @@ typedef enum unique_base_item {
 	UITYPE_GRISWOLD    = 0x42,
 	UITYPE_LGTFORGE    = 0x43,
 	UITYPE_LAZSTAFF    = 0x44,
+	UITYPE_FIELDPLATE  = 0x45,
 	UITYPE_INVALID     = -1,
 } unique_base_item;
 
@@ -149,6 +150,7 @@ typedef enum item_effect_type {
 	IPL_ADDMANAAC        = 0x4D,
 	IPL_FIRERESCLVL      = 0x4E,
 	IPL_AC_CURSE         = 0x4F,
+	IPL_REGLIFE          = 0x50,
 	IPL_INVALID          = -1,
 } item_effect_type;
 
@@ -2507,7 +2509,8 @@ typedef enum _item_indexes {
 	IDI_GRISWOLD   = 0x1F,
 	IDI_LGTFORGE   = 0x20,
 	IDI_LAZSTAFF   = 0x21,
-	IDI_RESURRECT  = 0x22,
+	IDI_RESURRECT    = 0x22,
+	IDI_TYRAELSMIGHT = 156,
 } _item_indexes;
 
 typedef enum _setlevels {
@@ -2726,7 +2729,7 @@ typedef enum item_special_effect {
 	ISPL_FIREDAM        = 0x00000010,
 	ISPL_LIGHTDAM       = 0x00000020,
 	ISPL_DRAINLIFE      = 0x00000040,
-	ISPL_UNKNOWN_1      = 0x00000080,
+	ISPL_REGLIFE        = 0x00000080,
 	ISPL_NOHEALPLR      = 0x00000100,
 	ISPL_UNKNOWN_2      = 0x00000200,
 	ISPL_UNKNOWN_3      = 0x00000400,
